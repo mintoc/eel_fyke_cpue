@@ -179,7 +179,7 @@ lcdat$survey <- factor(ifelse(lcdat$Site == "IFI", "IFI", "Russell"))
 ## trap level ID
 lcdat$fID <- factor(apply(lcdat[, c("chain", "trap_number")], 1, paste, collapse = ":"))
 
-save(lcdat, file = "all_lcdat.RData")
+save(lcdat, file = "../../data/all_lcdat.RData")
 
 ##-------------
 ## WEIGHT DATA 
@@ -206,4 +206,4 @@ site_levels <- c(site_levels, uniq_sites[!uniq_sites %in% site_levels])
 
 wdat$fSite <- factor(wdat$Site, levels = site_levels)
 
-save(wdat, file = "wdat.RData")
+save(wdat, file = "../../data/wdat.RData")

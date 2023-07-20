@@ -5,7 +5,7 @@
 library(ggplot2); theme_set(theme_bw())
 library(gridExtra)
 
-load("all_lcdat.RData")
+load("../../data/all_lcdat.RData")
 
 ## basic data plots
 p0 <- ggplot(lcdat, aes(x = jitter(Year), y = count)) +
@@ -57,8 +57,8 @@ dev.off()
 ##---------------
 ## covariate effects
 
-load("effects_pred.RData")
-load("count_fits.RData")
+load("../../data/effects_pred.RData")
+load("../../data/count_fits.RData")
 
 lakes <- c("BOH", "Furnace", "Feeagh", "Bunaveela")
 
@@ -184,7 +184,7 @@ dev.off()
 ##-----------------------
 ## AVERAGED YEARLY TREND
 ##-----------------------
-load("year_pred.RData")
+load("../../data/year_pred.RData")
 
 year_pred$Lake <- factor(year_pred$Lake, levels = lakes)
 var_lab <- "Year effect"
@@ -287,9 +287,9 @@ dev.off()
 ##---------------
 ## WEIGHTS PLOTS
 ##---------------
-load("weight_effects_pred.RData")
-load("weight_fits.RData")
-load("wdat.RData")
+load("../../data/weight_effects_pred.RData")
+load("../../data/weight_fits.RData")
+load("../../data/wdat.RData")
 
 wdat <- subset(wdat, Month != "Oct" & !is.na(wt))
 
@@ -385,8 +385,8 @@ dev.off()
 ##----------------------
 ## AVERAGE YEARLY TREND
 ##----------------------
-load("weight_year_pred.RData")
-load("wdat.RData")
+load("../../data/weight_year_pred.RData")
+load("../../data/wdat.RData")
 
 weight_year_pred$Lake <- factor(weight_year_pred$Lake, levels = lakes)
 

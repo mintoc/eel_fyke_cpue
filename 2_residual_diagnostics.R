@@ -6,8 +6,8 @@
 
 library(mgcv)
 library(DHARMa) 
-load("count_fits.RData")
-load("all_lcdat.RData")
+load("../../data/count_fits.RData")
+load("../../data/all_lcdat.RData")
 
 ##------------------------
 ## COUNT MODEL RESIDUALS - uses negative binomial distribution
@@ -137,8 +137,8 @@ dev.off()
 ##------------------------
 ## WEIGHT MODEL RESIDUALS - uses Tweedie distribution
 ##------------------------
-load("weight_fits.RData")
-load("wdat.RData")
+load("../../data/weight_fits.RData")
+load("../../data/wdat.RData")
 
 png(paste0("../tex/figures/Fig_S0_residual_diagnostics_weights", today, ".png"), height = 8, width = 7, units = "in", res = 400)
 set.seed(101)

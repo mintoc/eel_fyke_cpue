@@ -185,9 +185,9 @@ for(lake in lakes){
     year_pred <- rbind(year_pred, pred_year)
 }
 
-save(year_pred, file = "year_pred.RData")
-save(effects_pred, file = "effects_pred.RData")
-save(count_fits, file = "count_fits.RData")
+save(year_pred, file = "../../data/year_pred.RData")
+save(effects_pred, file = "../../data/effects_pred.RData")
+save(count_fits, file = "../../data/count_fits.RData")
 
 
 ##-----------------
@@ -303,7 +303,7 @@ for(lake in lakes){
     weight_year_pred <- rbind(weight_year_pred, pred_year)
 }
 
-save(weight_year_pred, file = "weight_year_pred.RData")
-save(weight_effects_pred, file = "weight_effects_pred.RData")
-save(weight_fits, file = "weight_fits.RData")
+save(weight_year_pred, file = "../../data/weight_year_pred.RData")
+save(weight_effects_pred, file = "../../data/weight_effects_pred.RData")
+save(weight_fits, file = "../../data/weight_fits.RData")
 
