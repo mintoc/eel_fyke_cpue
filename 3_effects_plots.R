@@ -14,7 +14,7 @@ p0 <- ggplot(lcdat, aes(x = jitter(Year), y = count)) +
     ylab("Count per trap") +
     theme(strip.background = element_rect(fill = "grey"))
 
-pdf("raw_data.pdf", height = 8, width = 10)
+pdf("../../tex/figures/raw_data.pdf", height = 8, width = 10)
 print(p0)
 dev.off()
 
@@ -48,7 +48,7 @@ p3 <- ggplot(lcdat, aes(x = Year, y = trap_gradient)) +
 
 today <- format(Sys.time(), "_%d_%m_%Y")
 
-png(paste0("../tex/figures/", "Variable_plots", today, ".png"), height = 6, width = 10, units = "in", res = 400)
+png(paste0("../../tex/figures/", "Variable_plots", today, ".png"), height = 6, width = 10, units = "in", res = 400)
 grid.arrange(p0, p1, p2, p3, nrow = 1)
 dev.off()
 
@@ -81,7 +81,6 @@ pvalue_df$p_value2 <- round(pvalue_df$p_value, 3)
 pvalue_df$p_value2[pvalue_df$p_value < 0.001] <- "<0.001"
 
 pvalue_df$Lake <- factor(pvalue_df$Lake, levels = lakes)
-
 
 vars <- unique(effects_pred$variable)
 
@@ -146,7 +145,6 @@ p_chain <-
               hjust = 1.2, vjust = 2, size = 3) +
     scale_colour_manual(values = c("black", "darkgrey"), breaks = c("TRUE", "FALSE"))
 
-
 ## site effects
 sub <- subset(effects_pred, variable == "fSite")
 sub$x[sub$x == "Back Weir"] <- "BW"
@@ -177,7 +175,8 @@ p_site <-
               hjust = 1.3, vjust = 2, size = 3) +
     scale_colour_manual(values = c("black", "darkgrey"), breaks = c("TRUE", "FALSE"))
 
-png(paste0("../tex/figures/", "Count_effect_plots", today, ".png"), height = 10, width = 7, units = "in", res = 400)
+##png(paste0("../../tex/figures/", "Count_effect_plots", today, ".png"), height = 10, width = 7, units = "in", res = 400)
+jpeg(paste0("../../tex/figures/", "Fig3_count_effect_plots", today, ".jpg"), height = 10, width = 7, units = "in", res = 600)
 grid.arrange(p_Year, p_doy, p_trap_depth, p_trap_gradient, p_trap_number, p_chain, p_site, ncol = 1)
 dev.off()
 
@@ -222,6 +221,13 @@ py1 <-
     ylab("Standardised count per fyke net") +
     theme(strip.background = element_rect(fill = "grey"))
 
+## all lakes on same plot
+py1_count <-
+    ggplot(year_pred, aes(x = Year, y = yhat)) +
+    geom_ribbon(aes(ymin = lwr, ymax = upr, fill = Lake), , alpha = 0.4) +
+    geom_line(aes(colour = Lake), lwd = 0.5) +
+    xlab("Year") +
+    ylab("Standardised count per fyke net")
 
 ## percentage change between the start and the end of the time series
 library(MASS) ## for random multivariate normal simulation
@@ -268,7 +274,7 @@ names(agg2)[2] <- c("upr")
 
 summary_df <- merge(merge(agg0, agg1), agg2)
 
-write.csv(summary_df, file = "../data/count_percent_decline.csv", row.names = FALSE)
+write.csv(summary_df, file = "../../data/count_percent_decline.csv", row.names = FALSE)
 
 py2 <- ggplot(percent_df, aes(x = pd)) +
     geom_density(fill = "grey") +
@@ -280,7 +286,8 @@ py2 <- ggplot(percent_df, aes(x = pd)) +
     geom_vline(xintercept = 0, lty = 4) +
     xlab("Percentage decline in standardised count trend 1987-2022")
 
-png(paste0("../tex/figures/", "Count_percent_decline_plots", today, ".png"), height = 8, width = 10, units = "in", res = 400)
+##png(paste0("../../tex/figures/", "Count_percent_decline_plots", today, ".png"), height = 8, width = 10, units = "in", res = 400)
+jpeg(paste0("../../tex/figures/", "Fig5_count_percent_decline_plots", today, ".jpg"), height = 8, width = 10, units = "in", res = 600)
 grid.arrange(py0, py1, py2, nrow = 3)
 dev.off()
 
@@ -378,7 +385,8 @@ p_site <-
               hjust = 1.3, vjust = 2, size = 3) +
     scale_colour_manual(values = c("black", "darkgrey"), breaks = c("TRUE", "FALSE"))
 
-png(paste0("../tex/figures/", "Weight_effect_plots", today, ".png"), height = 7, width = 7, units = "in", res = 400)
+##png(paste0("../../tex/figures/", "Weight_effect_plots", today, ".png"), height = 7, width = 7, units = "in", res = 400)
+jpeg(paste0("../../tex/figures/", "Fig4_weight_effect_plots", today, ".jpg"), height = 7, width = 7, units = "in", res = 600)
 grid.arrange(p_Year, p_doy, p_site, ncol = 1)
 dev.off()
 
@@ -413,6 +421,14 @@ py1 <-
     xlab("Year") +
     ylab("Standardised mass per fyke net (kg)") +
     theme(strip.background = element_rect(fill = "grey"))
+
+py1_weight <-    
+    ggplot(weight_year_pred, aes(x = Year, y = yhat)) +
+    geom_ribbon(aes(ymin = lwr, ymax = upr, fill = Lake), alpha = 0.4) +
+    geom_line(aes(colour = Lake), lwd = 0.5) +
+    xlab("Year") +
+    ylab("Standardised mass per fyke net (kg)")
+
 
 ## percentage change between the start and the end of the time series
 weight_percent_df <- NULL
@@ -457,8 +473,19 @@ py2 <- ggplot(weight_percent_df, aes(x = pd)) +
         xlab("Percentage decline in standardised mass trend 1987-2022")
 
 
-png(paste0("../tex/figures/", "Weight_percent_decline_plots", today, ".png"), height = 8, width = 10, units = "in", res = 400)
+##png(paste0("../../tex/figures/", "Weight_percent_decline_plots", today, ".png"), height = 8, width = 10, units = "in", res = 400)
+jpeg(paste0("../../tex/figures/", "Fig6_weight_percent_decline_plots", today, ".jpg"), height = 8, width = 10, units = "in", res = 600)
 grid.arrange(py0, py1, py2, ncol = 1)
 dev.off()
 
-write.csv(weight_summary_df, file = "../data/weight_percent_decline.csv", row.names = FALSE)
+write.csv(weight_summary_df, file = "../../data/weight_percent_decline.csv", row.names = FALSE)
+
+## all standardised trends on one graph
+library(ggpubr)
+##png(paste0("../../tex/figures/", "Between_lake_comparison_plots", today, ".png"), height = 6, width = 10, units = "in", res = 400)
+jpeg(paste0("../../tex/figures/", "Fig7_between_lake_comparison_plots", today, ".jpg"), height = 6, width = 10, units = "in", res = 600)
+ggarrange(py1_count, py1_weight, nrow=1, common.legend = TRUE, legend="bottom")
+dev.off()
+
+
+
