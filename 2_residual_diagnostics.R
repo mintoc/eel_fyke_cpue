@@ -119,11 +119,11 @@ p_tab <- NULL
 
 lcdat$fMonth <- factor(lcdat$Month, levels = c("Apr", "May", "Jun", "Jul", "Aug", "Sep"))
 
-png(paste0("../tex/figures/Fig_S3_residual_vs_month_", today, ".png"), height = 8, width = 7, units = "in", res = 400)
+png(paste0("../../tex/figures/Fig_S3_residual_vs_month_", today, ".png"), height = 8, width = 7, units = "in", res = 400)
 par(mfrow = c(2, 2), mar = c(2, 2, 1, 1), oma = c(2, 2, 1, 1))
 for(lake in lakes){
     simulationOutput <- simulateResiduals(fittedModel = count_fits[[lake]], plot = F)
-    res <- residuals(simulationOutput, quantileFunction = qnorm)
+    res <- residuals(simulationOutput, quantileFunction = qnorm, outlierValues = c(-5,5))
     sub_dat <- subset(lcdat, Lake == lake & Month != "Oct" & !is.na(count))
     sub_dat <- droplevels(sub_dat)    
     boxplot(res ~ sub_dat$fMonth, notch = TRUE, bty = "l")

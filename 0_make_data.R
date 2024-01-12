@@ -9,13 +9,13 @@ library(ggplot2); theme_set(theme_bw())
 ##------------
 ## COUNT DATA
 ##------------
-dat <- read.xls("../data/Catch Data updated April 2023.xlsx", nrows = 613, sheet = "Fyke Surveys")
+dat <- read.xls("../../data/Catch Data updated April 2023.xlsx", nrows = 613, sheet = "Fyke Surveys")
 
 ## remove October data
 dat <- subset(dat, Month != "Oct")
 
 ## merge in the depths
-depths <- read.xls("../data/Sites Depths.xlsx")
+depths <- read.xls("../../data/Sites Depths.xlsx")
 
 names(depths)[names(depths) == "Inshore.Dept"] <- "dstart"
 names(depths)[names(depths) == "Dept.at.75m...midway"] <- "dmid"
@@ -148,10 +148,10 @@ dev.off()
 
 lcdat$chain <- paste0("chain", lcdat$Code)
 
-##pairs <- data.frame(X = paste0("X", 1:20), pair = rep(paste0("pair", 1:10), each = 2))
+pairs <- data.frame(X = paste0("X", 1:20), pair = rep(paste0("pair", 1:10), each = 2))
 
-##lcdat$pair <-
-##    pairs$pair[match(as.character(lcdat$variable), pairs$X)]
+lcdat$pair <-
+    pairs$pair[match(as.character(lcdat$variable), pairs$X)]
 
 lcdat <- droplevels(lcdat)
 
@@ -179,6 +179,9 @@ lcdat$survey <- factor(ifelse(lcdat$Site == "IFI", "IFI", "Russell"))
 ## trap level ID
 lcdat$fID <- factor(apply(lcdat[, c("chain", "trap_number")], 1, paste, collapse = ":"))
 
+## otter guard on/off
+lcdat$guard <- ifelse(lcdat$Year >= 2015, "yes", "no")
+
 save(lcdat, file = "../../data/all_lcdat.RData")
 
 ##-------------
@@ -205,5 +208,8 @@ site_levels <- toupper(letters[1:10])
 site_levels <- c(site_levels, uniq_sites[!uniq_sites %in% site_levels])
 
 wdat$fSite <- factor(wdat$Site, levels = site_levels)
+
+## otter guard on/off
+wdat$guard <- ifelse(wdat$Year >= 2015, "yes", "no")
 
 save(wdat, file = "../../data/wdat.RData")

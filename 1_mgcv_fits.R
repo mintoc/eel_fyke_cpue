@@ -37,6 +37,7 @@ for(lake in lakes){
                                s(trap_gradient, m = 1, bs = bs_other) +
                                s(trap_number, by = survey, m = 1, bs = bs_other) +
                                s(fchain, bs = "re") +
+                               guard +
                                offset(log(Effort)))
     }
     if(lake == "BOH"){
@@ -48,6 +49,7 @@ for(lake in lakes){
                                s(trap_gradient, k = 5, m = 1, bs = bs_other) +
                                s(trap_number, m = 1, bs = bs_other) +
                                s(fchain, bs = "re") +
+                               guard +
                                offset(log(Effort)))
     }
     if(lake %in% c("Furnace", "Bunaveela")){
@@ -59,6 +61,7 @@ for(lake in lakes){
                                s(trap_gradient, k= 5, m = 1, bs = bs_other) +
                                s(trap_number, k= 5, m = 1, bs = bs_other) +
                                s(fchain, bs = "re") +
+                               guard +
                                offset(log(Effort)))
     }
     ## fit the model
@@ -193,7 +196,7 @@ save(count_fits, file = "../../data/count_fits.RData")
 ##-----------------
 ## WEIGHT DATA FITS 
 ##-----------------
-load("wdat.RData")
+load("../../data/wdat.RData")
 
 lakes <- c("Feeagh", "Furnace", "Bunaveela", "BOH")
 
@@ -212,6 +215,7 @@ for(lake in lakes){
                                s(Year, bs = bs_year) +
                                s(doy, bs = bs_other) +
                                s(fSite, bs = "re") +
+                               guard + 
                                offset(log(Effort))
                            )
     }else{
@@ -219,6 +223,7 @@ for(lake in lakes){
                                s(Year, bs = bs_year) +
                                s(doy, bs = bs_other, k = 5) +
                                s(fSite, bs = "re") +
+                               guard + 
                                offset(log(Effort))
                            )
     }

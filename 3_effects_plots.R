@@ -396,6 +396,8 @@ dev.off()
 load("../../data/weight_year_pred.RData")
 load("../../data/wdat.RData")
 
+wdat <- subset(wdat, Month != "Oct" & !is.na(wt))
+
 weight_year_pred$Lake <- factor(weight_year_pred$Lake, levels = lakes)
 
 wdat$Lake <- factor(wdat$Lake, levels = lakes)
